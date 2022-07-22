@@ -1,0 +1,4 @@
+.van-cell__value{
+  text-align: left !important;
+
+}

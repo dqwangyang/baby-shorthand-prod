@@ -1,0 +1,155 @@
+
+.container {
+  min-height: 100%;
+  height: 100%;
+}
+
+
+
+.my-container {
+  background-color: #fff;
+  flex: 1;
+}
+.top-info {
+  display: flex;
+  width: 100%;
+  text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.block {
+  width: 90%;
+  height: 60%;
+  background-color: #fff;
+  border-radius:9px;
+}
+.my-info-wrap {
+  position: absolute;
+/* margin:0 40rpx; */
+width: 90%;
+  background-color: #fff;
+  border-radius: 10px;
+  height: 280rpx;
+  border: 1px solid #f2f2f2;
+  display: flex;
+  box-sizing: border-box;
+  flex-wrap:wrap;
+  overflow: hidden;
+  box-shadow:0px 2px 12px 0px rgba(0,0,0,0.07);
+}
+.my-info-wrap-1 {
+  display: flex;
+  flex-wrap:wrap;
+  overflow: hidden;
+  width:100%;
+}
+
+.top-box-left {
+width:30%;
+}
+.top-box-right {
+width:70%;
+}
+.top-box-left image {
+  width: 136rpx;
+  height: 136rpx;
+  border-radius: 70%;
+  overflow: hidden;
+  margin-top: 20rpx;
+}
+
+
+.split-line {
+  width:100%;
+height:10rpx;
+background:rgba(249,249,249,1);
+margin-top:140rpx;
+}
+
+
+
+
+.submit-btn-wrap{
+    display:flex;
+    
+}
+.submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:6rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 12px; 
+    width: 160rpx;
+    background-color:#FF9DCA;
+    border-radius: 25px;
+}
+.my-nickname {
+  width: 100%;
+  margin-top:16rpx;
+  color:#595959;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.top-row-1  {
+width: 100%;
+height: 60rpx;
+display: flex;
+margin-top: 30rpx;
+font-size:14px;
+font-weight:400;
+color:#666666;
+align-items: center;
+margin-left:80rpx;
+
+}
+
+.top-row-1 image {
+width: 60rpx;
+height: 60rpx;
+margin-left: 10rpx;
+}
+.baby-nickname {
+  margin-left: 6rpx;
+  color: #595959;
+}
+.baby-birthday {
+  margin-left: 16rpx;
+}
+.top-row-2  {
+width: 100%;
+display: flex;
+margin-top: 20rpx;
+font-size:14px;
+font-weight:400;
+color:#666666;
+height: 78rpx;
+align-items: center;
+}
+
+
+.top-row-3  {
+width: 100%;
+display: flex;
+align-items: center;
+margin-top: 20rpx;
+font-size:12px;
+font-weight:400;
+color:#666666;
+}
+
+.van-field__input{
+
+  text-align:right !important;
+}
+.van-cell-custom{
+  padding:4rpx 15rpx !important;
+}

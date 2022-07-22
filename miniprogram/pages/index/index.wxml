@@ -1,0 +1,445 @@
+
+<view class="container">
+
+  <view class="member-top-bar-nav-wrap" style="width:100%; ">
+<van-notice-bar speed="20" color="#FF9DCA"  background="#FFFFFF" scrollable left-icon="fire-o"  text="{{notice}}"/>  </view>
+
+
+  <view class="my-container">
+
+    <view style="height:150rpx;background-color:#FF9DCA">
+
+    </view>
+    <view class="top-info">
+      <view class="my-info-wrap" style="top:{{140+statusBarHeight}}rpx;">
+        <view class="my-info-wrap-1">
+          <view class="top-box-left">
+            <image src='{{userInfo.avatar_url}}'>头像</image>
+            <view class="submit-btn-wrap" wx:if="{{!isLogin}}">
+              <button class="submit-btn" open-type="getUserInfo" bindgetuserinfo="onGetOpenid"  >登录</button>
+            </view>
+            <view wx:if="{{isLogin}}" class="my-nickname">
+              {{userInfo.nick_name}}
+            </view>
+          </view>
+          <view class="top-box-right" style="margin-top:30rpx;">
+              <van-cell  bind:click ="gotoMyinfo" custom-class="van-cell-custom" border="{{false}}"  title="{{babyInfo.name}}" is-link />
+              <van-cell   custom-class="van-cell-custom" border="{{false}}" title="{{babyInfo.brithday}}"  />
+              <van-cell  custom-class="van-cell-custom"  border="{{false}}" title="{{babyInfo.age}}"  />    
+             <van-cell  bind:click ="gotoInvit"  custom-class="van-cell-custom"  border="{{false}}"  title="分享给家人共同记录" is-link />              
+      
+          </view>
+
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <view class="split-line"></view>
+
+<view style="width:90%;">
+<van-sticky>
+<van-grid >
+  <van-grid-item bind:click="typeClick" data-name="{{item.name}}"  wx:for="{{typeList}}" icon="{{item.icon}}" link-type="navigateTo"   text="{{item.name}}"></van-grid-item>
+</van-grid>
+</van-sticky>
+</view> 
+
+  <!-- 今日记录 -->
+
+<view style="margin: 100rpx;width: 90%;margin-top: 50rpx;font-size:12px;">
+<view style="margin-top:20rpx;" bindtap="typeClick" data-name='{{item.name}}' data-item="{{item}}" wx:for="{{recordList}}">
+<van-icon name="{{item.icon}}" size="25" />
+<text style="margin-left:30rpx;">{{item.name}}</text>
+<text style="margin-left:30rpx;">{{item.showTime}}</text>
+<text wx:if="{{item.name=='喂奶'||item.name=='吸奶' ||item.name=='吃药' ||item.name=='辅食'}}" style="margin-left:30rpx;">{{item.text1}}</text>
+<text wx:if="{{item.name=='喂奶'||item.name=='吸奶'}}" style="margin-left:30rpx;">{{item.text2}}ML</text>
+<text wx:if="{{item.name=='辅食'}}" style="margin-left:30rpx;">{{item.text2}}g</text>
+<van-icon style="float: right;margin-right: 25rpx;border-radius:20rpx;"  size="25" name="records" />
+
+<van-icon style="float: right;" name="{{item.avatar_url}}" size="30" />
+<van-divider />
+
+</view>
+</view>
+  <view wx:if="{{recordList.length<=0}}">
+  <van-empty description="您今天还没有记录哦!" />
+  </view>
+  <view></view>
+
+
+
+</view>
+
+  <!-- 喂奶 -->
+<view>
+<van-overlay z-index="100" show="{{ weinaiShow }}" bind:click="onClickHide">
+  <view class="wrapper" bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+    <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_1.png" size="20"/> 喂奶
+</view>
+
+    <view style="margin-left:40rpx;margin-top:60rpx;">
+   
+                <van-cell-group>
+                  <van-field  label="类型"    type="text"  bind:input="text1Input" data-name='喂奶'   placeholder="母乳/奶粉"   value="{{weinaiRecord.text1}}"      border="{{ false }}"  />       
+
+              </van-cell-group>
+               <van-cell-group> 
+                <van-field  label="数量/ml"    type="number" bind:input="text2Input" data-name='喂奶'   placeholder="非必填"    value="{{weinaiRecord.text2}}"      border="{{ false }}"  />       
+              </van-cell-group>
+
+               <van-cell-group>  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="喂奶" value="{{weinaiRecord.text3}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text4Input" data-name='喂奶'    value="{{weinaiRecord.text4}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="submitRecord" data-name='喂奶' type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+
+<!-- 尿布 -->
+<view>
+<van-overlay z-index="100"  show="{{ niaobuShow }}" bind:click="onClickHide">
+  <view class="wrapper" style="height:85%;"bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+          <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_2.png" size="20"/> 换尿布
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">                
+
+               <van-cell-group>  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="换尿布" value="{{niaobuRecord.text1}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text2Input" data-name='换尿布'    value="{{niaobuRecord.text2}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="submitRecord" data-name='换尿布'  type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+
+
+<!-- 睡觉 -->
+<view>
+<van-overlay z-index="100"  show="{{ shuijiaoShow }}" bind:click="onClickHide">
+  <view class="wrapper" style="height:85%;" bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+       <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_3.png" size="20"/> 睡觉
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">    
+
+               <van-cell-group>  
+                       <van-cell title="开始" bind:click="showDayList"   data-name="睡觉1" value="{{shuijiaoRecord.text1}}" />
+
+                 </van-cell-group>
+
+                  <van-cell-group>  
+                       <van-cell title="结束" bind:click="showDayList"   data-name="睡觉2" value="{{shuijiaoRecord.text2}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize   bind:input="text3Input" data-name='睡觉'   value="{{shuijiaoRecord.text3}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+
+  
+
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="submitRecord" data-name='睡觉' type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+
+
+
+<!-- 吃药 -->
+<view>
+<van-overlay z-index="100"  show="{{ chiyaoShow }}" bind:click="onClickHide">
+  <view class="wrapper"  style="height:85%;" bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+          <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_7.png" size="20"/>吃药
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">                
+     <van-cell-group>
+                  <van-field  label="药名"    type="text"  bind:input="text1Input" data-name='吃药'   placeholder="伊可新/美琳"   value="{{chiyaoRecord.text1}}"      border="{{ false }}"  />       
+
+              </van-cell-group>
+               <van-cell-group>  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="吃药" value="{{chiyaoRecord.text2}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text3Input" data-name='吃药'    value="{{chiyaoRecord.text3}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button  bind:click="submitRecord" data-name='吃药' type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+<!-- 辅食 -->
+<view>
+<van-overlay  z-index="100" show="{{ fushiShow }}" bind:click="onClickHide">
+  <view class="wrapper" bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+       <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_4.png" size="20"/> 辅食
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">
+                <van-cell-group>
+                  <van-field  label="类型"    type="text" bind:input="text1Input" data-name='辅食'    placeholder="稀饭/鸡蛋"   value="{{fushiRecord.text1}}"      border="{{ false }}"  />       
+
+              </van-cell-group>
+               <van-cell-group> 
+                <van-field  label="数量/g"    type="number"   bind:input="text2Input" data-name='辅食'  placeholder="非必填"    value="{{fushiRecord.text2}}"      border="{{ false }}"  />       
+              </van-cell-group>
+
+               <van-cell-group>  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="辅食" value="{{fushiRecord.text3}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text3Input" data-name='辅食'    value="{{fushiRecord.text4}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button  bind:click="submitRecord" data-name='辅食' type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+<!-- 吸奶 -->
+<view wx:if="{{xinaiShow}}">
+<van-overlay z-index="100"  show="{{ xinaiShow }}" bind:click="onClickHide">
+  <view class="wrapper" bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+   
+       <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_5.png" size="20"/> 吸奶
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">
+                <van-cell-group>
+                  <van-field  label="类型"    type="text" bind:input="text1Input" data-name='吸奶'    placeholder="左侧/右侧"   value="{{xinaiRecord.text1}}"      border="{{ false }}"  />       
+              </van-cell-group>
+               <van-cell-group> 
+                <van-field  label="数量/ml"    type="number" bind:input="text2Input" data-name='吸奶'     placeholder="非必填"    value="{{xinaiRecord.text2}}"      border="{{ false }}"  />       
+              </van-cell-group>
+               <van-cell-group>  
+                  <van-cell title="时间"  bind:click="showDayList"   data-name="吸奶" value="{{xinaiRecord.text3}}" />
+
+              </van-cell-group>
+               <van-cell-group>  
+                         <van-field  label="备注"  type="textarea" autosize  bind:input="text4Input" data-name='吸奶'    value="{{xinaiRecord.text4}}"     placeholder="非必填"        border="{{ false }}"  />       
+                 </van-cell-group>
+
+    </view>
+
+  
+
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="submitRecord" data-name='吸奶'  type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+<!-- 洗澡 -->
+<view>
+<van-overlay z-index="100"  show="{{ xizaoShow }}" bind:click="onClickHide">
+  <view class="wrapper"  style="height:75%;"  bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+       <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_6.png" size="20"/> 洗澡
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">                
+
+               <van-cell-group>  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="洗澡" value="{{xizaoRecord.text1}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text2Input" data-name='洗澡'    value="{{xizaoRecord.text2}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button  bind:click="submitRecord" data-name='洗澡' type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+<!-- 其他 -->
+<view>
+<van-overlay z-index="100"  show="{{ qitaShow }}" bind:click="onClickHide">
+  <view class="wrapper"  style="height:75%;"  bindtap="overlayClose">
+    <view class="block" catch:tap="noop" >
+             <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="other-pay" size="20"/> 其它
+</view>
+    <view style="margin-left:40rpx;margin-top:60rpx;">                
+
+               <van-cell-group  >  
+                       <van-cell title="时间" bind:click="showDayList"   data-name="其它" value="{{qitaRecord.text1}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+                  <van-field  label="备注"  type="textarea" autosize  bind:input="text2Input" data-name='其它'    value="{{qitaRecord.text2}}"     placeholder="非必填"        border="{{ false }}"  />       
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="submitRecord" data-name='其它'  type="primary" color="#FF9DCA" block>记录</van-button>
+
+     </view>  
+       <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;text-align:center;"> 
+                        
+          <van-icon name="smile-o" size="20"/> 可以先记录然后在修改哦！
+     </view>  
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+
+ <!-- 宝宝信息修改-->
+<view>
+<van-overlay show="{{ baobaoShow }}" z-index="100" bind:click="onClickHide">
+  <view class="wrapper" bindtap="overlayClose" style="height:75%;">
+    <view class="block" catch:tap="noop" >
+    <view style="margin-left:40rpx;margin-top:60rpx;">             宝宝信息
+</view>
+
+    <view style="margin-left:40rpx;margin-top:60rpx;">
+   
+                <van-cell-group>
+                  <van-field  label="乳名"    type="text"  bind:input="bbNameInput"    placeholder="十八朵"   value="{{babyInfo.name}}"      border="{{ false }}"  />       
+
+              </van-cell-group>
+               <van-cell-group> 
+            <van-cell title="性别" bind:click="showSexList"    value="{{babyInfo.sex}}" />              </van-cell-group>
+
+               <van-cell-group>  
+                       <van-cell title="生日" bind:click="showDayList"   data-name="生日" value="{{babyInfo.brithday}}" />
+
+                 </van-cell-group>
+                     <van-cell-group>  
+
+                 </van-cell-group>
+
+    </view>
+      <view style="pmargin-left:20rpx;width:90%;margin:5%; margin-top:30rpx;"> 
+                           <van-button bind:click="babyInfoSubmit"  type="primary" color="#FF9DCA" block>提交</van-button>
+
+     </view>       
+       </view>
+       
+  </view>
+  
+</van-overlay>
+</view>
+
+<van-popup show="{{ showSex }}" position="bottom"   custom-style="height: 400rpx;" >
+      <van-picker visible-item-count="2"	 show-toolbar  bind:confirm="showSexConfirm" value="{{babyInfo.sex}}"
+        bind:cancel="showSexChannel" columns="{{ sexList }}" bind:change="sexChange" />
+
+</van-popup>
+
+<van-popup show="{{ showDayList }}" position="bottom"   custom-style="height: 40%;" >
+      <van-datetime-picker
+        type="{{selectedType=='生日'?'date':'datetime'}}"
+        value="{{ currentDate }}" 
+        max-date="{{currentDate}}"
+        bind:confirm="dayListConfirm"
+        bind:cancel="dayListCancel"
+      />
+</van-popup>
+
+<van-action-sheet
+  show="{{ shareShow }}"
+  actions="{{ shareActions }}"
+  bind:close="shareClose"
+/>
+<van-tabbar active="{{ 0 }}" bind:change="onTabbarChange">
+  <van-tabbar-item icon="home-o">服务</van-tabbar-item>
+  <van-tabbar-item icon="search">记录</van-tabbar-item> 
+  <van-tabbar-item icon="chart-trending-o">图表</van-tabbar-item> 
+  <van-tabbar-item icon="service">关于</van-tabbar-item> 
+
+</van-tabbar>
+<van-notify id="van-notify" />

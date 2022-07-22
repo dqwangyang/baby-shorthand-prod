@@ -1,0 +1,33 @@
+<!--miniprogram/pages/about/about.wxml-->
+<text style="text-align: center;margin-top: 50rpx;">建议/问题请添加作者微信</text>
+<text style="text-align: center;margin-top: 20rpx;">tuzimmda</text>
+<view style=margin:5%;text-align:center;">
+<image  show-menu-by-longpress="true"  style="height: 350px;" src="/images/weixin.jpg"></image>
+</view>
+<!-- <view style="margin-left:20rpx;margin-right:20rpx;margin-top: 50rpx;">
+
+<!-- <van-cell-group>
+  <van-field
+    value="{{ message }}"
+    type="textarea"
+    placeholder="请输入问题建议"
+    autosize
+    border="{{ false }}"
+    bind:input="bugInput" 
+  />
+</van-cell-group> -->
+<!-- </view> --> 
+   <view style="text-align: center;"> 
+                           <!-- <van-button bind:click="bugSubmit"  type="primary" color="#FF9DCA" block>提交</van-button> -->
+     <text style="text-align: center;margin-top: 50rpx;">添加时请备注来源“宝宝速记”</text>
+     </view> 
+
+<van-notify id="van-notify" />
+<van-tabbar active="{{ 3}}" bind:change="onTabbarChange">
+  <van-tabbar-item icon="home-o">服务</van-tabbar-item>
+  <van-tabbar-item icon="search">记录</van-tabbar-item> 
+  <van-tabbar-item icon="chart-trending-o">图表</van-tabbar-item> 
+
+    <van-tabbar-item icon="service">关于</van-tabbar-item> 
+
+</van-tabbar>
