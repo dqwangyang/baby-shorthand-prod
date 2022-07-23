@@ -16,7 +16,9 @@
           <view class="top-box-left">
             <image src='{{userInfo.avatar_url}}'>头像</image>
             <view class="submit-btn-wrap" wx:if="{{!isLogin}}">
-              <button class="submit-btn" open-type="getUserInfo" bindgetuserinfo="onGetOpenid"  >登录</button>
+              <!-- <button class="submit-btn" open-type="getUserProfile" bindgetuserinfo="onGetOpenid"  >登录</button> -->
+              <button class="submit-btn" wx:if="{{canIUseGetUserProfile}}" bindtap="onGetOpenid"> 登录 </button>
+             <button class="submit-btn" wx:else open-type="getUserInfo" bindgetuserinfo="onGetOpenid"> 登录 </button>
             </view>
             <view wx:if="{{isLogin}}" class="my-nickname">
               {{userInfo.nick_name}}

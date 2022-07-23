@@ -2,7 +2,9 @@
   "usingComponents": {    
     "chart": "plugin://echarts/chart"
 
-}
+},
+"navigationBarTitleText": "图表",
+"navigationBarTextStyle": "white"
 
 
 }

@@ -7,11 +7,13 @@ Page({
   data: {    
     userInfo: {},
     recordList: [],   
+    canIUseGetUserProfile:false,
     babyInfo: {
       sex: 1,
       name: '宝宝',
       brithday:db_util.formatTime(new Date(),'Y-M-D'),
       age:'0天'
+
     },
    
     typeList:[],    
@@ -680,6 +682,13 @@ wx.redirectTo({
       showDayList:false
     });
   },
+  onShareAppMessage: function () {
+    return {
+     title: '宝宝速记',
+     desc: '快来记录宝宝的日常吧~',
+     path: '/pages/index/index' // 路径，传递参数到指定页面。
+    }
+   },
   dayListCancel(){
     this.setData({
       showDayList:false
@@ -742,6 +751,11 @@ wx.redirectTo({
       userInfo:userInfo,
       isLogin:false
     });
+    if (wx.getUserProfile) {
+        this.setData({
+          canIUseGetUserProfile: true
+        })
+      }
   }
   //获取今日数据
 
@@ -755,7 +769,21 @@ wx.redirectTo({
     }
   },
   onGetOpenid: function(e) {
-     let user=e.detail.userInfo;
+  
+    if(this.data.canIUseGetUserProfile){
+        wx.getUserProfile({
+            desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            success: (res) => {
+                this.getUserInfo(res.userInfo);
+                        }
+                    });
+                }else{
+                    this.getUserInfo(e.detail.userInfo);
+                }
+    
+  },
+
+   getUserInfo:function(user){
     let userInfo=this.data.userInfo;
     userInfo.avatar_url=user.avatarUrl;
     userInfo.nick_name=user.nickName;
@@ -764,52 +792,56 @@ wx.redirectTo({
     userInfo.create_time=db_util.getLocalTime(new Date().getTime());
     var me=this;
     wx.showLoading({
-      title: '加载中',
+    title: '加载中',
     })
     // 调用云函数
     wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
+    name: 'login',
+    data: {},
+    success: res => {
         userInfo.open_id=res.result.openid;  
         wx.hideLoading();         
 
-         //先查询用户是否存在
-      db_util.getUserByOpenId(userInfo.open_id,function(users){
-              if(users.length>0){
-                userInfo=users[0];             
+        //先查询用户是否存在
+    db_util.getUserByOpenId(userInfo.open_id,function(users){
+            if(users.length>0){
+                //更新下用户数据     
+                db_util.updateUser(userInfo.nick_name,userInfo.avatar_url,users[0]._id,function(res){
+                
+                });
+                userInfo._id=users[0]._id;        
                 wx.setStorageSync('userInfo', userInfo);
                 me.setData({
-                  userInfo:userInfo,
-                  isLogin:true
-                });
+                userInfo:userInfo,
+                isLogin:true
+                });                
                 me.getTodayRecords();
-              } else{
+            } else{
                 //插入数据库
-               db_util.add('mm_user',userInfo,function(_id){
+            db_util.add('mm_user',userInfo,function(_id){
                 userInfo._id=_id;              
                 wx.setStorageSync('userInfo', userInfo);
                 me.setData({
-                  userInfo:userInfo,
-                  isLogin:true
+                userInfo:userInfo,
+                isLogin:true
                 });
                 //插入成功后创建一个宝宝对象
                 let share_child_id=wx.getStorageSync('share_child_id');
                 if(share_child_id){
-                           //如果是点击的分享过来的
-                          wx.setStorageSync('child_id', share_child_id);
+                        //如果是点击的分享过来的
+                        wx.setStorageSync('child_id', share_child_id);
                             let baby_user={};
                             baby_user.child_id=share_child_id;
                             baby_user.user_id=userInfo._id;
-                          db_util.add('mm_user_childs',baby_user,function(_id){
+                        db_util.add('mm_user_childs',baby_user,function(_id){
                             me.getTodayRecords();
-                          });
+                        });
                 }else{
-                      let baby={};
-                      baby.name='宝宝';
-                      baby.sex='女';
-                      baby.brithday=db_util.getLocalTime(new Date().getTime());
-                      baby.create_time=baby.brithday;
+                    let baby={};
+                    baby.name='宝宝';
+                    baby.sex='女';
+                    baby.brithday=db_util.getLocalTime(new Date().getTime());
+                    baby.create_time=baby.brithday;
                         db_util.add('mm_childs',baby,function(_id){
                             //创建宝宝和用户的关系
                             let baby_id=_id;
@@ -817,27 +849,27 @@ wx.redirectTo({
                             let baby_user={};
                             baby_user.child_id=baby_id;
                             baby_user.user_id=userInfo._id;
-                          db_util.add('mm_user_childs',baby_user,function(_id){
+                        db_util.add('mm_user_childs',baby_user,function(_id){
                             me.getTodayRecords();
-                          }
-                          );
+                        }
+                        );
 
                         }
                     );
-                 }
+                }
                 });
-               
-              }        
-         
-               })
-      
-      },
-      fail: err => {
+            
+            }        
+        
+            })
+    
+    },
+    fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-      
-      }
+    
+    }
     })
-  },
+   }
  
 
   

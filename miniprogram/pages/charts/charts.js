@@ -1,4 +1,5 @@
 var db_util = require('../../utils/util.js');
+
 Page({
 
   /**
@@ -21,7 +22,22 @@ Page({
   onLoad: function (options) {
 
    
-    
+    let user=wx.getStorageSync("userInfo");
+    if(user==null||user._id==null||user._id==""){
+        wx.showModal({
+            title: '提示',
+            content: '您还没有登录',
+            showCancel:false,
+            success (res) {
+              if (res.confirm) {
+                wx.redirectTo({
+                    url: '/pages/index/index',
+                  })
+              } 
+            }
+          }) 
+          return;   
+    }
 
     let typeList=[{"_id":"6d127e375f292a48000024803d3ddaf5","icon":"/images/icon_record_1.png","name":"喂奶"},
     {"_id":"7fbac6cf5f292dcf00002f3d3129d0a3","icon":"/images/icon_record_2.png","name":"换尿布"},

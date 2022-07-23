@@ -36,7 +36,18 @@ function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess
     onSuccess(res.data);
   })
 }
-
+function updateUser(nickName,avatarUrl,openId, onSuccess) {
+    db.collection('mm_user').doc(openId).update({
+      data:{
+        avatar_url:avatarUrl,
+        nick_name:nickName
+         },
+         success(res){
+           onSuccess(res.data);
+         }
+        })
+  
+  }
 function updateRecords(record, onSuccess) {
   db.collection('mm_records').doc(record._id).update({
     data:{
@@ -261,6 +272,7 @@ module.exports = {
   updateChild:updateChild,
   getAge:getAge,
   getRecordsBySearchTime:getRecordsBySearchTime,
-  getRecordsBySearchTimeAndTypeName:getRecordsBySearchTimeAndTypeName
+  getRecordsBySearchTimeAndTypeName:getRecordsBySearchTimeAndTypeName,
+  updateUser:updateUser
 }
 
