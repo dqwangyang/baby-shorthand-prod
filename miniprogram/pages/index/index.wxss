@@ -62,7 +62,6 @@ width:70%;
   height: 136rpx;
   border-radius: 70%;
   overflow: hidden;
-  margin-top: 20rpx;
 }
 
 
@@ -94,7 +93,6 @@ margin-top:140rpx;
 }
 .my-nickname {
   width: 100%;
-  margin-top:16rpx;
   color:#595959;
   overflow: hidden;
   white-space: nowrap;

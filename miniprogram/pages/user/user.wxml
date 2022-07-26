@@ -1,0 +1,19 @@
+<view >
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="avatar" src="{{avatarUrl}}"></image>
+  </button> 
+
+  <view style="width:90%;margin:5%;">
+    <view style="width:20%;float:left;">
+        <label >昵称：</label>
+      </view>
+      <view style="width:80%;float:right;"> 
+        <input type="nickname" bindinput="nickInput"  value="{{nickName}}" class="weui-input" placeholder="请输入昵称"/>
+      </view>
+  </view>
+  <view style="width:90%;margin:5%;padding-top:20%;"> 
+           <van-button bind:click="updateUser"  type="primary" color="#FF9DCA" block>提交</van-button>
+
+     </view>  
+
+</view>
