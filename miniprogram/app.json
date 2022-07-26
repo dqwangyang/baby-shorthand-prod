@@ -3,8 +3,8 @@
     "pages/index/index",
     "pages/charts/charts",
     "pages/about/about",
-    "pages/search/search"  
-   
+    "pages/search/search",
+    "pages/user/user"
   ],
   "plugins": {
     "echarts": {
@@ -43,8 +43,5 @@
     "van-collapse-item": "@vant/weapp/collapse-item/index",
     "van-notify": "@vant/weapp/notify/index",
     "van-calendar": "@vant/weapp/calendar/index"
-    
-
   }
-  
 }

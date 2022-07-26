@@ -3,6 +3,17 @@ const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : '0' + n
 }
+function deleteRecord(recordId,onSuccess){
+  const $ = db.command;
+  db.collection('mm_records').where({    
+    _id:recordId
+   
+  }).remove({
+    success:res=>{
+      onSuccess(res);
+    }
+  });
+}
 
 function getRecordsBySearchTime(seach_time,childId,onSuccess){
   let today=formatTime(new Date(seach_time.replace(/-/g,'/')),'Y-M-D')+" 00:00:01";
@@ -17,7 +28,15 @@ function getRecordsBySearchTime(seach_time,childId,onSuccess){
     onSuccess(res.data);
   })
 }
-
+function getRecordsByTypeName(childId,typeName,onSuccess){  
+  const $ = db.command;
+  db.collection('mm_records').where({    
+    child_id:childId,
+    name:typeName
+  }).orderBy('seach_time', 'asc').get().then(res => {
+    onSuccess(res.data);
+  })
+}
 function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess){
   seach_time=seach_time+"-01";
   let today=formatTime(new Date(seach_time.replace(/-/g,'/')),'Y-M-D')+" 00:00:01"; 
@@ -36,8 +55,8 @@ function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess
     onSuccess(res.data);
   })
 }
-function updateUser(nickName,avatarUrl,openId, onSuccess) {
-    db.collection('mm_user').doc(openId).update({
+function updateUser(nickName,avatarUrl,id, onSuccess) {
+    db.collection('mm_user').doc(id).update({
       data:{
         avatar_url:avatarUrl,
         nick_name:nickName
@@ -273,6 +292,8 @@ module.exports = {
   getAge:getAge,
   getRecordsBySearchTime:getRecordsBySearchTime,
   getRecordsBySearchTimeAndTypeName:getRecordsBySearchTimeAndTypeName,
-  updateUser:updateUser
+  updateUser:updateUser,
+  getRecordsByTypeName:getRecordsByTypeName,
+  deleteRecord:deleteRecord
 }
 
