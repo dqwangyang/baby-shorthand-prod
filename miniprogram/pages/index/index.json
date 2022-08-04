@@ -1,5 +1,8 @@
 
 {
   "navigationBarTitleText": "宝宝速记",
-  "navigationBarTextStyle": "white"
+  "navigationBarTextStyle": "white",
+  "usingComponents": {
+    "van-dialog": "@vant/weapp/dialog/index"
+  }
 }

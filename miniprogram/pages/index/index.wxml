@@ -1,5 +1,6 @@
 
 <view class="container">
+  <van-dialog id="van-dialog" />
 
   <view class="member-top-bar-nav-wrap" style="width:100%; ">
 <van-notice-bar speed="20" color="#FF9DCA"  background="#FFFFFF" scrollable left-icon="fire-o"  text="{{notice}}"/>  </view>

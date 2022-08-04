@@ -134,6 +134,27 @@ function getChildIdByUserId(userId,onSuccess){
     }
   })
 }
+//根据用户ID获取用户和宝宝的关联关系记录
+function getUserChildByUserId(userId,onSuccess){
+  db.collection('mm_user_childs').where({
+    user_id: userId
+  }).get({
+    success: function(res) {
+      onSuccess(res.data[0]);
+    }
+  })
+}
+//更新用户的宝宝
+function updateUserChild(id,childId,onSuccess){
+  db.collection('mm_user_childs').doc(id).update({
+    data:{
+      child_id:childId
+       },
+       success(res){
+         onSuccess(res.data);
+       }
+      })
+}
 
 //获取今天的记录
 function getRecordsToday( userId,childId,onSuccess){
@@ -294,6 +315,8 @@ module.exports = {
   getRecordsBySearchTimeAndTypeName:getRecordsBySearchTimeAndTypeName,
   updateUser:updateUser,
   getRecordsByTypeName:getRecordsByTypeName,
-  deleteRecord:deleteRecord
+  deleteRecord:deleteRecord,
+  updateUserChild:updateUserChild,
+  getUserChildByUserId:getUserChildByUserId
 }
 

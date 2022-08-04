@@ -2,6 +2,8 @@
 const app = getApp()
 var db_util = require('../../utils/util.js');
 import Notify from '@vant/weapp/notify/notify';
+import Dialog from '@vant/weapp/dialog/dialog';
+
 Page({
 	data: {
 		userInfo: {},
@@ -1011,9 +1013,51 @@ Page({
 							userInfo: users[0],
 							isLogin: true
 						});
-						me.getTodayRecords();
+						let share_child_id = wx.getStorageSync('share_child_id');
+						//查询用户的宝宝ID
+						db_util.getChildIdByUserId(userInfo._id, function(_id) {
+							db_util.getChild(share_child_id, function(childs) {
+							
+								if(share_child_id&&share_child_id!=_id){
+												//弹出提示是否要绑定新的宝宝
+												Dialog.confirm({
+													title: '新宝宝提示',
+													message: '是否要绑定【'+childs[0].name+"】为您的宝宝？\n绑定后，以前的宝宝数据会被清空~",
+												}).then(() => {
+														// on confirm
+														//更新宝宝为最新的宝宝
+														wx.showLoading({
+															title: '更新中...',
+														})
+														db_util.getUserChildByUserId(userInfo._id ,function (res){
+
+															db_util.updateUserChild(res._id,share_child_id ,function (res){
+																wx.hideLoading({
+																	success: (res) => {},
+																})
+																me.getTodayRecords();
+
+															});
+														});										
+													}).catch(() => {
+														// on cancel
+														me.getTodayRecords();
+
+													})
+								}else{
+									me.getTodayRecords();
+
+								}
+								
+							
+							});
+						
+						
+						});
+				
+
 					} else {
-						//插入数据库
+						//新用户，插入数据库，创建宝宝对象
 						db_util.add('mm_user', userInfo, function(_id) {
 							userInfo._id = _id;
 							wx.setStorageSync('userInfo', userInfo);
