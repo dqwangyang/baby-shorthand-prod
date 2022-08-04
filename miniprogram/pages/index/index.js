@@ -841,8 +841,8 @@ Page({
 	onShareAppMessage: function() {
 		return {
 			title: '宝宝速记',
-			desc: '快来记录宝宝的日常吧~',
-			path: '/pages/index/index' // 路径，传递参数到指定页面。
+			desc: this.data.userInfo.nick_name + '邀您一起记录' + this.data.babyInfo.name + '的成长',
+			path: '/pages/index/index?child_id='+this.data.babyInfo._id // 路径，传递参数到指定页面。
 		}
 	},
 	dayListCancel() {
