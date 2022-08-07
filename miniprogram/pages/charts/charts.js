@@ -111,7 +111,7 @@ Page({
 		});
 		this.getShowData(this.data.defaultDate);
 	},
-	getShowData: function(selectTime) {
+	  getShowData(selectTime) {
 		let childId = wx.getStorageSync('child_id');
 		let selectType = this.data.selectType;
 		let me = this;
@@ -127,6 +127,7 @@ Page({
 				})
 			})
 		} else {
+            
 			db_util.getRecordsBySearchTimeAndTypeName(selectTime, childId, selectType, function(res) {
 				me.getShowRecords(res);
 

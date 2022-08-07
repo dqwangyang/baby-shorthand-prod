@@ -15,29 +15,64 @@ function deleteRecord(recordId,onSuccess){
   });
 }
 
-function getRecordsBySearchTime(seach_time,childId,onSuccess){
+async function getRecordsBySearchTime(seach_time,childId,onSuccess){
   let today=formatTime(new Date(seach_time.replace(/-/g,'/')),'Y-M-D')+" 00:00:01";
   console.info(seach_time);
   let tt=new Date(today.replace(/-/g,'/')).getTime();
   console.info(tt);
   const $ = db.command;
-  db.collection('mm_records').where({    
-    child_id:childId,
-    seach_time: $.gte(tt)
-  }).orderBy('seach_time', 'desc').get().then(res => {
-    onSuccess(res.data);
-  })
+    const MAX_LIMIT = 20;
+    //先取出集合的总数
+    const countResult = await db.collection('mm_records').where({    
+        child_id:childId,
+        seach_time: $.gte(tt)
+      }).count();
+    const total = countResult.total;
+    //计算需分几次取
+    const batchTimes = Math.ceil(total / MAX_LIMIT);
+    // 承载所有读操作的 promise 的数组
+    const arraypro = [];
+
+    for (let i = 0; i < batchTimes; i++) {
+        const promise = await  db.collection('mm_records').where({    
+            child_id:childId,
+            seach_time: $.gte(tt)
+        }).orderBy('seach_time', 'desc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
+        for (let j = 0; j < promise.data.length;j++){
+            arraypro.push(promise.data[j])
+          }
+    }   
+onSuccess(arraypro);
 }
-function getRecordsByTypeName(childId,typeName,onSuccess){  
+async function getRecordsByTypeName(childId,typeName,onSuccess){  
   const $ = db.command;
-  db.collection('mm_records').where({    
+  //获取记录
+  const countResult= await db.collection('mm_records').where({    
     child_id:childId,
     name:typeName
-  }).orderBy('seach_time', 'asc').get().then(res => {
-    onSuccess(res.data);
-  })
+  }).count();
+  const total = countResult.total;
+  const MAX_LIMIT=20;
+  const batchTimes = Math.ceil(total / MAX_LIMIT);
+  const arraypro = [];
+
+  for (let i = 0; i < batchTimes; i++) {
+
+    const promise = await db.collection('mm_records').where({    
+            child_id:childId,
+            name:typeName
+        }).orderBy('seach_time', 'asc').get().skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
+
+        for (let j = 0; j < promise.data.length;j++){
+            arraypro.push(promise.data[j]);
+          }
 }
-function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess){
+    onSuccess(arraypro);
+
+}
+
+
+async  function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess){
   seach_time=seach_time+"-01";
   let today=formatTime(new Date(seach_time.replace(/-/g,'/')),'Y-M-D')+" 00:00:01"; 
   let tt=new Date(today.replace(/-/g,'/')).getTime();   
@@ -47,13 +82,29 @@ function getRecordsBySearchTimeAndTypeName(seach_time,childId,typeName,onSuccess
   let endDay=getLocalTime(endTime);
   endDay=new Date(endDay.replace(/-/g,'/')).getTime();
   const $ = db.command;
-  db.collection('mm_records').where({    
+  //获取记录
+  const countResult= await db.collection('mm_records').where({    
     child_id:childId,
     seach_time: $.and($.gte(tt),$.lt(endDay)),
     name:typeName
-  }).orderBy('seach_time', 'asc').get().then(res => {
-    onSuccess(res.data);
-  })
+  }).count();
+  const total = countResult.total;
+  const MAX_LIMIT=20;
+  const batchTimes = Math.ceil(total / MAX_LIMIT);
+  const arraypro = [];
+
+  for (let i = 0; i < batchTimes; i++) {
+    const    promise= await db.collection('mm_records').where({    
+            child_id:childId,
+            seach_time: $.and($.gte(tt),$.lt(endDay)),
+            name:typeName
+        }).orderBy('seach_time', 'asc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
+
+        for (let j = 0; j < promise.data.length;j++){
+            arraypro.push(promise.data[j]);
+          }
+    }
+    onSuccess( arraypro);
 }
 function updateUser(nickName,avatarUrl,id, onSuccess) {
     db.collection('mm_user').doc(id).update({
@@ -156,17 +207,33 @@ function updateUserChild(id,childId,onSuccess){
       })
 }
 
-//获取今天的记录
-function getRecordsToday( userId,childId,onSuccess){
+//获取今天的记录 
+async function getRecordsToday( userId,childId,onSuccess){
   let today=formatTime(new Date(),'Y-M-D')+" 00:00:01";
   let tt=new Date(today.replace(/-/g,'/')).getTime();
   const $ = db.command;
-  db.collection('mm_records').where({    
-    child_id:childId,
-    seach_time: $.gte(tt)
-  }).orderBy('seach_time', 'desc').get().then(res => {
-    onSuccess(res.data);
-  })
+  const MAX_LIMIT = 20;
+    //先取出集合的总数
+    const countResult = await db.collection('mm_records').where({    
+        child_id:childId,
+        seach_time: $.gte(tt)
+      }).count();
+    const total = countResult.total
+    //计算需分几次取
+    const batchTimes = Math.ceil(total / MAX_LIMIT)
+    // 承载所有读操作的 promise 的数组
+    const arraypro = []
+
+    for (let i = 0; i < batchTimes; i++) {
+        const promise = await  db.collection('mm_records').where({    
+            child_id:childId,
+            seach_time: $.gte(tt)
+        }).orderBy('seach_time', 'desc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
+        for (let j = 0; j < promise.data.length;j++){
+            arraypro.push(promise.data[j])
+          }
+        }
+        onSuccess(arraypro);
 }
 
 function add(name,json, onSuccess) {
