@@ -61,7 +61,7 @@ async function getRecordsByTypeName(childId,typeName,onSuccess){
     const promise = await db.collection('mm_records').where({    
             child_id:childId,
             name:typeName
-        }).orderBy('seach_time', 'asc').get().skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
+        }).orderBy('seach_time', 'asc').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get();
 
         for (let j = 0; j < promise.data.length;j++){
             arraypro.push(promise.data[j]);
