@@ -165,7 +165,10 @@ Page({
 		let name = ev.currentTarget.dataset.name;
 		let record = ev.currentTarget.dataset.item;
 		let isUpdate = ev.currentTarget.dataset.update || 0;
-		let user_id = ev.currentTarget.dataset.item.user_id;
+		let user_id = 0;
+		if(ev.currentTarget.dataset.item){
+			user_id=ev.currentTarget.dataset.item.user_id;
+		}
 		if (this.data.userInfo._id != user_id && isUpdate) {
 			Dialog.alert({
 				message: '只能修改本人添加的记录！',

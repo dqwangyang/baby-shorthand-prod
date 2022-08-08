@@ -85,7 +85,7 @@
 
   <!-- 喂奶 -->
 <view>
-<van-overlay z-index="100" show="{{ weinaiShow }}" bind:click="onClickHide">
+<van-overlay  z-index="100"  show="{{ weinaiShow }}" bind:click="onClickHide">
   <view class="wrapper" bindtap="overlayClose">
     <view class="block" catch:tap="noop" >
     <view style="margin-left:40rpx;margin-top:60rpx;">              <van-icon name="/images/icon_record_1.png" size="20"/> 喂奶
