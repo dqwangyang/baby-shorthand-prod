@@ -75,7 +75,11 @@ Page({
 			"_id": "c8a291cf5f292e20000024df1485a535",
 			"icon": "/images/tizhong.png",
 			"name": "体重"
-		}, {
+		},{
+			"_id": "c8a291cf5f292e20000034df1485a535",
+			"icon": "/images/bb.png",
+			"name": "臭臭"
+		},  {
 			"_id": "c8a291cf5f292e20000034df1485a535",
 			"icon": "other-pay",
 			"name": "其它"
@@ -204,83 +208,34 @@ Page({
 
 			for (let j in recordGroups) {
 				let item = recordGroups[j];
-				if (item.name == '喂奶') {
-					let weinai = {};
-					weinai.showTime = item.showTime;
-					weinai.quantity = item.text2;
-					weinai.location = item.text1;
-					weinai.icon = item.icon;
-					daySum.quantity = (daySum.quantity || 0) + (weinai.quantity * 1);
+				if (item.name == '喂奶'||item.name == '吸奶') {				
+					daySum.quantity = (daySum.quantity || 0) + (item.text2 * 1);
 					daySum.tt = "单位/ML";
 				}
-				if (item.name == '吸奶') {
-					let xinai = {};
-					xinai.showTime = item.showTime;
-					xinai.quantity = item.text2;
-					xinai.location = item.text1;
-					xinai.icon = item.icon;
-					daySum.quantity = (daySum.quantity || 0) + (xinai.quantity * 1);
-					daySum.tt = "单位/ML";
-
-				}
+			
 				if (item.name == '洗澡') {
-					let xizao = {};
-					xizao.showTime = item.showTime;
-					xizao.memoto = item.text2;
-					xizao.icon = item.icon;
+				
 					daySum.quantity = (daySum.quantity || 0) + 1;
 					daySum.tt = "单位/次";
 
 				}
-				if (item.name == '身高') {
-					let shengao = {};
-					shengao.showTime = item.showTime;
-					shengao.quantity = item.text1;
-					daySum.quantity = (daySum.quantity || 0) + (shengao.quantity * 1);
+				if (item.name == '身高') {			
+					daySum.quantity = (daySum.quantity || 0) + (item.text1 * 1);
 					daySum.tt = "单位/CM";
 				}
 				if (item.name == '体重') {
-					let tizhong = {};
-					tizhong.showTime = item.showTime;
-					tizhong.quantity = item.text1;
-					daySum.quantity = (daySum.quantity || 0) + (tizhong.quantity * 1);
+				
+					daySum.quantity = (daySum.quantity || 0) + (item.text1 * 1);
 					daySum.tt = "单位/KG";
 				}
-				if (item.name == '其它') {
-					let qita = {};
-					qita.showTime = item.showTime;
-					qita.memoto = item.text2;
-					qita.icon = item.icon;
+				if (item.name == '其它'||item.name=='臭臭'||item.name == '换尿布'||item.name == '吃药') {				
 					daySum.quantity = (daySum.quantity || 0) + 1;
 					daySum.tt = "单位/次";
-
-
-				}
-				if (item.name == '换尿布') {
-					let niaobu = {};
-					niaobu.showTime = item.showTime;
-					niaobu.memoto = item.text2;
-					niaobu.icon = item.icon;;
-					daySum.quantity = (daySum.quantity || 0) + 1;
-					daySum.tt = "单位/次";
-
-				}
-				if (item.name == '吃药') {
-					let chiyao = {};
-					chiyao.showTime = item.showTime;
-					chiyao.text1 = item.text1;
-					chiyao.icon = item.icon;
-					daySum.quantity = (daySum.quantity || 0) + 1;
-					daySum.tt = "单位/次";
-
-				}
+				}			
+		
 				if (item.name == '辅食') {
-					let fushi = {};
-					fushi.showTime = item.showTime;
-					fushi.text1 = item.text1;
-					fushi.quantity = item.text2;
-					fushi.icon = item.icon;
-					daySum.quantity = (daySum.quantity || 0) + (fushi.quantity * 1);
+				
+					daySum.quantity = (daySum.quantity || 0) + ( item.text2 * 1);
 					daySum.tt = "单位/g";
 
 				}

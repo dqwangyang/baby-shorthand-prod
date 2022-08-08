@@ -7,7 +7,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    message:""
+    message:"",
+    activeNames: []
+
+  },
+  onChange(event) {
+    this.setData({
+      activeNames: event.detail
+    });
   },
   bugInput:function(e){
     let message=this.data.message;

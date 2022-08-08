@@ -8,13 +8,13 @@
 <view style="margin-bottom: 150rpx;">
 <van-empty wx:if="{{recordList.length<=0}}" description="暂无记录!" />
 
-<view wx:for="{{recordList}}" wx:for-item="headerItem"  wx:for-index="index" >
+<view wx:for="{{recordList}}" wx:for-item="headerItem"  wx:key="key"  wx:for-index="index" >
 <van-divider textColor="#FF9DCA"   fontSize="12" contentPosition="center">{{headerItem.headTime}}</van-divider>
     
   <van-collapse value="{{ activeNames }}"  bind:change="onChange">
   <van-collapse-item value="{{headerItem.daySum.weinaiCount+'次'+'/'+headerItem.daySum.weinaiQuantity+'ml'}}" icon="{{headerItem.weinaiList[0].icon}}" wx:if="{{headerItem.weinaiList.length>0}}" title="喂奶"  name="喂奶{{index}}">
 
-      <text wx:for="{{headerItem.weinaiList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.weinaiList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
         <text style="margin-left: 15rpx;">{{item.quantity}}ml</text>
         <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.location}};</text>
@@ -22,7 +22,7 @@
   </van-collapse-item>
   <van-collapse-item  value="{{headerItem.daySum.xinaiCount+'次'+'/'+headerItem.daySum.xinaiQuantity+'ml'}}" icon="{{headerItem.xinaiList[0].icon}}" wx:if="{{headerItem.xinaiList.length>0}}" title="吸奶"  name="吸奶{{index}}">
 
-      <text wx:for="{{headerItem.xinaiList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.xinaiList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
         <text style="margin-left: 15rpx;">{{item.quantity}}ml</text>
         <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.location}};</text>
@@ -30,7 +30,7 @@
   </van-collapse-item>
   <van-collapse-item value="{{headerItem.daySum.niaobuCount+'次'}}" icon="{{headerItem.niaobuList[0].icon}}" wx:if="{{headerItem.niaobuList.length>0}}" title="换尿布"  name="1">
 
-      <text wx:for="{{headerItem.niaobuList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.niaobuList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
         <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.memoto}};</text>
       </text>
@@ -38,7 +38,7 @@
 
   <van-collapse-item value="{{headerItem.daySum.shuijiaoCount+'次'+'/'+headerItem.daySum.shuijiaoHours+'小时'}}" icon="{{headerItem.shuijiaoList[0].icon}}" wx:if="{{headerItem.shuijiaoList.length>0}}" title="睡觉"  name="睡觉{{index}}">
 
-      <text wx:for="{{headerItem.shuijiaoList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.shuijiaoList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
         <text style="margin-left: 15rpx;">{{item.text1}}小时</text>
         <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.memoto}};</text>
@@ -46,7 +46,7 @@
   </van-collapse-item>
   <van-collapse-item value="{{headerItem.daySum.fushiCount+'次'+'/'+headerItem.daySum.fushiQantity+'g'}}" icon="{{headerItem.fushiList[0].icon}}" wx:if="{{headerItem.fushiList.length>0}}" title="辅食"  name="辅食{{index}}">
 
-      <text wx:for="{{headerItem.fushiList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.fushiList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
         <text style="margin-left: 15rpx;">{{item.text1}}</text>
           <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.quantity}}g;</text>
@@ -54,7 +54,7 @@
   </van-collapse-item>
     <van-collapse-item value="{{headerItem.daySum.xizaoCount+'次'}}"  icon="{{headerItem.xizaoList[0].icon}}" wx:if="{{headerItem.xizaoList.length>0}}" title="洗澡"  name="洗澡{{index}}">
 
-      <text wx:for="{{headerItem.xizaoList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.xizaoList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
           <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.memoto}};</text>
       </text>
@@ -62,15 +62,23 @@
 
   <van-collapse-item value="{{headerItem.daySum.chiyaoCount+'次'}}"  icon="{{headerItem.chiyaoList[0].icon}}" wx:if="{{headerItem.chiyaoList.length>0}}" title="吃药"  name="吃药{{index}}">
 
-      <text wx:for="{{headerItem.chiyaoList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.chiyaoList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
           <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.text1}};</text>
       </text>
   </van-collapse-item>
 
+  <van-collapse-item  value="{{headerItem.daySum.chouchouCount+'次'}}"  icon="{{headerItem.chouchouList[0].icon}}" wx:if="{{headerItem.chouchouList.length>0}}" title="臭臭"  name="臭臭{{index}}">
+
+<text wx:for="{{headerItem.chouchouList}}" wx:for-item="item" wx:key="key"  wx:key="key">
+  <text style="margin-left: 15rpx;">{{item.showTime}}</text>
+    <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.memoto}};</text>
+</text>
+</van-collapse-item>
+
    <van-collapse-item  value="{{headerItem.daySum.qitaCount+'次'}}"  icon="{{headerItem.qitaList[0].icon}}" wx:if="{{headerItem.qitaList.length>0}}" title="其它"  name="其它{{index}}">
 
-      <text wx:for="{{headerItem.qitaList}}" wx:for-item="item">
+      <text wx:for="{{headerItem.qitaList}}" wx:for-item="item"  wx:key="key">
         <text style="margin-left: 15rpx;">{{item.showTime}}</text>
           <text style="margin-left: 15rpx;margin-right:25rpx;">{{item.memoto}};</text>
       </text>

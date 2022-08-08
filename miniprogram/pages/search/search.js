@@ -134,6 +134,7 @@ Page({
           let niaobuList=[];
           let qitaList=[];
           let shuijiaoList=[];
+          let chouchouList=[];
           let daySum={};
 
           for(let j in recordGroups){
@@ -167,6 +168,13 @@ Page({
                 qita.memoto=item.text2;
                 qita.icon=item.icon;
                 qitaList.push(qita);
+              }
+              if(item.name=='臭臭'){
+                let qita={};
+                qita.showTime=item.showTime;               
+                qita.memoto=item.text2;
+                qita.icon=item.icon;
+                chouchouList.push(qita);
               }
               if(item.name=='换尿布'){
                 let niaobu={};
@@ -231,6 +239,8 @@ Page({
               allList[i].qitaList=qitaList;
               daySum.qitaCount=qitaList.length;
 
+              allList[i].chouchouList=chouchouList;
+              daySum.chouchouCount=chouchouList.length;
               allList[i].daySum=daySum;
         }
        this.setData({

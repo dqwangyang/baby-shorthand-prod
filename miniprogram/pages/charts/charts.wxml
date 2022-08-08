@@ -8,8 +8,8 @@
 <view style="width:90%; margin: 5%;">
 <van-sticky>
 
-<van-grid column-num="5" clickable="true">
-  <van-grid-item bind:click="typeClick" data-name="{{item.name}}"  wx:for="{{typeList}}" icon="{{item.icon}}" link-type="navigateTo"   text="{{item.name}}"></van-grid-item>
+<van-grid column-num="6" clickable="true">
+  <van-grid-item bind:click="typeClick" data-name="{{item.name}}"  wx:for="{{typeList}}"  wx:key="key" icon="{{item.icon}}" link-type="navigateTo"   text="{{item.name}}"></van-grid-item>
 </van-grid>
 </van-sticky>
 </view> 

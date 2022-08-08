@@ -1,8 +1,8 @@
 <!--miniprogram/pages/about/about.wxml-->
-<text style="text-align: center;margin-top: 50rpx;">建议/问题请添加作者微信</text>
-<text style="text-align: center;margin-top: 20rpx;">tuzimmda</text>
+<text style="text-align: center;margin-top: 20rpx;">建议/问题请添加作者微信</text>
+<text style="text-align: center;margin-top: 10rpx;">tuzimmda</text>
 <view style=margin:5%;text-align:center;">
-<image  show-menu-by-longpress="true"  style="height: 350px;" src="/images/weixin.jpg"></image>
+<image  show-menu-by-longpress="true"  style="height: 300px;" src="cloud://mengmeng-8swro.6d65-mengmeng-8swro-1302795357/weixin.jpg"></image>
 </view>
 <!-- <view style="margin-left:20rpx;margin-right:20rpx;margin-top: 50rpx;">
 
@@ -21,6 +21,27 @@
                            <!-- <van-button bind:click="bugSubmit"  type="primary" color="#FF9DCA" block>提交</van-button> -->
      <text style="text-align: center;margin-top: 50rpx;">添加时请备注来源“宝宝速记”</text>
      </view> 
+     <van-divider contentPosition="center" textColor="#FF9DCA">更新记录</van-divider>
+
+<view style="width:90%;margin-left:5%;margin-right:5%;margin-bottom: 30%;">
+     <van-collapse value="{{ activeNames }}" bind:change="onChange">
+      <van-collapse-item title="2022年8月8日" name="2">
+      <text>增加臭臭记录</text>
+    </van-collapse-item> 
+    <van-collapse-item title="2022年8月7日" name="1">
+      <text>修复记录获取不完整的问题</text>
+    </van-collapse-item> 
+    <van-collapse-item title="2022年8月4日" name="0">
+      <view>1.修复分享给家人，家人无法看到数据的问题</view>
+      <view>2.增加可以修改头像和昵称的功能</view>
+
+    </van-collapse-item> 
+    <van-collapse-item title="2022年7月25日" name="-1">
+      <view>增加身高，体重记录</view>      
+
+    </van-collapse-item> 
+</van-collapse>
+</view>
 
 <van-notify id="van-notify" />
 <van-tabbar active="{{ 3}}" bind:change="onTabbarChange">

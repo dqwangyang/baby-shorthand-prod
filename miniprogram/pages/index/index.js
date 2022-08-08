@@ -35,6 +35,8 @@ Page({
 		shengaoRecord: {},
 		tizhongShow: false,
 		tizhongRecord: {},
+		chouchouShow: false,
+		chouchouRecord: {},
 		chiyaoShow: false,
 		chiyaoRecord: {},
 		niaobuShow: false,
@@ -163,156 +165,179 @@ Page({
 		let name = ev.currentTarget.dataset.name;
 		let record = ev.currentTarget.dataset.item;
 		let isUpdate = ev.currentTarget.dataset.update || 0;
+		let user_id = ev.currentTarget.dataset.item.user_id;
+		if (this.data.userInfo._id != user_id && isUpdate) {
+			Dialog.alert({
+				message: '只能修改本人添加的记录！',
+			}).then(() => {
+				// on close
 
-		if (name == '喂奶') {
-			if (isUpdate == 0) {
-				record = {};
+			});
+		} else {
+			if (name == '喂奶') {
+				if (isUpdate == 0) {
+					record = {};
 
-				record.text1 = '';
-				record.text2 = '10';
-				record.text3 = db_util.getLocalTime(new Date().getTime());
-				record.text4 = "";
+					record.text1 = '';
+					record.text2 = '10';
+					record.text3 = db_util.getLocalTime(new Date().getTime());
+					record.text4 = "";
+				}
+				this.setData({
+					weinaiShow: true,
+					weinaiRecord: record
+
+				})
 			}
-			this.setData({
-				weinaiShow: true,
-				weinaiRecord: record
+			if (name == '睡觉') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '睡觉') {
-			if (isUpdate == 0) {
-				record = {};
+					record.text1 = db_util.getLocalTime(new Date().getTime());
+					record.text2 = db_util.getLocalTime(new Date().getTime());
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					shuijiaoShow: true,
+					shuijiaoRecord: record
 
-				record.text1 = db_util.getLocalTime(new Date().getTime());
-				record.text2 = db_util.getLocalTime(new Date().getTime());
-				record.text3 = "";
-				record.text4 = "";
+				})
 			}
-			this.setData({
-				shuijiaoShow: true,
-				shuijiaoRecord: record
+			if (name == '吸奶') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '吸奶') {
-			if (isUpdate == 0) {
-				record = {};
+					record.text1 = '';
+					record.text2 = '10';
+					record.text3 = db_util.getLocalTime(new Date().getTime());
+					record.text4 = "";
+				}
+				this.setData({
+					xinaiShow: true,
+					xinaiRecord: record
 
-				record.text1 = '';
-				record.text2 = '10';
-				record.text3 = db_util.getLocalTime(new Date().getTime());
-				record.text4 = "";
+				})
 			}
-			this.setData({
-				xinaiShow: true,
-				xinaiRecord: record
+			if (name == '辅食') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '辅食') {
-			if (isUpdate == 0) {
-				record = {};
+					record.text1 = '';
+					record.text2 = '2';
+					record.text4 = "";
+					record.text3 = db_util.getLocalTime(new Date().getTime());
+				}
+				this.setData({
+					fushiShow: true,
+					fushiRecord: record
 
-				record.text1 = '';
-				record.text2 = '2';
-				record.text4 = "";
-				record.text3 = db_util.getLocalTime(new Date().getTime());
+				})
 			}
-			this.setData({
-				fushiShow: true,
-				fushiRecord: record
 
-			})
-		}
+			if (name == '洗澡') {
+				if (isUpdate == 0) {
+					record = {};
 
-		if (name == '洗澡') {
-			if (isUpdate == 0) {
-				record = {};
+					record.text1 = db_util.getLocalTime(new Date().getTime());
+					record.text2 = "";
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					xizaoShow: true,
+					xizaoRecord: record
 
-				record.text1 = db_util.getLocalTime(new Date().getTime());
-				record.text2 = "";
-				record.text3 = "";
-				record.text4 = "";
+				})
 			}
-			this.setData({
-				xizaoShow: true,
-				xizaoRecord: record
+			if (name == '身高') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '身高') {
-			if (isUpdate == 0) {
-				record = {};
+					record.text1 = 0;
+					record.text2 = db_util.getLocalTime(new Date().getTime());
+					record.text3 = "";
 
-				record.text1 = 0;
-				record.text2 = db_util.getLocalTime(new Date().getTime());
-				record.text3 = "";
+				}
+				this.setData({
+					shengaoShow: true,
+					shengaoRecord: record
 
+				})
 			}
-			this.setData({
-				shengaoShow: true,
-				shengaoRecord: record
+			if (name == '体重') {
+				if (isUpdate == 0) {
+					record = {};
+					record.text1 = 0;
+					record.text2 = db_util.getLocalTime(new Date().getTime());
+					record.text3 = "";
 
-			})
-		}
-		if (name == '体重') {
-			if (isUpdate == 0) {
-				record = {};
-				record.text1 = 0;
-				record.text2 = db_util.getLocalTime(new Date().getTime());
-				record.text3 = "";
+				}
+				this.setData({
+					tizhongShow: true,
+					tizhongRecord: record
 
+				})
 			}
-			this.setData({
-				tizhongShow: true,
-				tizhongRecord: record
+			if (name == '吃药') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '吃药') {
-			if (isUpdate == 0) {
-				record = {};
-
-				record.text1 = "";
-				record.text2 = db_util.getLocalTime(new Date().getTime());
-				record.text3 = "";
-				record.text4 = "";
+					record.text1 = "";
+					record.text2 = db_util.getLocalTime(new Date().getTime());
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					chiyaoShow: true,
+					chiyaoRecord: record
+				})
 			}
-			this.setData({
-				chiyaoShow: true,
-				chiyaoRecord: record
-			})
-		}
-		if (name == '换尿布') {
-			if (isUpdate == 0) {
-				record = {};
+			if (name == '换尿布') {
+				if (isUpdate == 0) {
+					record = {};
 
-				record.text1 = db_util.getLocalTime(new Date().getTime());
-				record.text2 = '';
-				record.text3 = "";
-				record.text4 = "";
+					record.text1 = db_util.getLocalTime(new Date().getTime());
+					record.text2 = '';
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					niaobuShow: true,
+					niaobuRecord: record
+
+				})
 			}
-			this.setData({
-				niaobuShow: true,
-				niaobuRecord: record
+			if (name == '其它') {
+				if (isUpdate == 0) {
+					record = {};
 
-			})
-		}
-		if (name == '其它') {
-			if (isUpdate == 0) {
-				record = {};
-
-				record.text1 = db_util.getLocalTime(new Date().getTime());
-				record.text2 = "";
-				record.text3 = "";
-				record.text4 = "";
+					record.text1 = db_util.getLocalTime(new Date().getTime());
+					record.text2 = "";
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					qitaShow: true,
+					qitaRecord: record
+				})
 			}
-			this.setData({
-				qitaShow: true,
-				qitaRecord: record
-			})
-		}
 
+			if (name == '臭臭') {
+				if (isUpdate == 0) {
+					record = {};
+
+					record.text1 = db_util.getLocalTime(new Date().getTime());
+					record.text2 = "";
+					record.text3 = "";
+					record.text4 = "";
+				}
+				this.setData({
+					chouchouShow: true,
+					chouchouRecord: record
+				})
+			}
+		}
 	},
 	submitRecord(e) {
 
@@ -369,6 +394,11 @@ Page({
 			record.seach_time = new Date(record.text1.replace(/-/g, '/')).getTime();
 
 		}
+		if (name == '臭臭') {
+			record = this.data.chouchouRecord;
+			record.seach_time = new Date(record.text1.replace(/-/g, '/')).getTime();
+
+		}
 		var me = this;
 		this.overlayClose();
 
@@ -409,37 +439,37 @@ Page({
 		if (!this.data.isLogin) {
 			return;
 		}
-		let user = wx.getStorageSync("userInfo");		
+		let user = wx.getStorageSync("userInfo");
 		wx.showLoading({
 			title: '加载中',
-		})		
-			db_util.getChildIdByUserId(user._id, function(_id) {
-				wx.setStorageSync('child_id', _id);
-				db_util.getChild(_id, function(childs) {
-					let child = childs[0];
-					if (child.brithday != '') {
-						child.age = db_util.getAge(child.brithday);
-					} else {
-						child.age = '0天';
-					}
-					wx.setStorageSync('child', child);
-					me.setData({
-						babyInfo: child
-					});
-				});
-				db_util.getRecordsToday(user._id, _id, function(records) {
-					for (let i in records) {
-						records[i].showTime = db_util.formatTime(new Date(records[i].seach_time), 'h:m');
-					}
-					me.setData({
-						recordList: records
-					});
-					me.getNoticeList(records);
-					wx.hideLoading();
-
+		})
+		db_util.getChildIdByUserId(user._id, function(_id) {
+			wx.setStorageSync('child_id', _id);
+			db_util.getChild(_id, function(childs) {
+				let child = childs[0];
+				if (child.brithday != '') {
+					child.age = db_util.getAge(child.brithday);
+				} else {
+					child.age = '0天';
+				}
+				wx.setStorageSync('child', child);
+				me.setData({
+					babyInfo: child
 				});
 			});
-		
+			db_util.getRecordsToday(user._id, _id, function(records) {
+				for (let i in records) {
+					records[i].showTime = db_util.formatTime(new Date(records[i].seach_time), 'h:m');
+				}
+				me.setData({
+					recordList: records
+				});
+				me.getNoticeList(records);
+				wx.hideLoading();
+
+			});
+		});
+
 		wx.removeStorage({
 			key: 'share_child_id'
 		})
@@ -465,7 +495,7 @@ Page({
 			if (item.name == '辅食') {
 				str += item.text1 + "--" + item.text2 + 'g ';
 			}
-			if (item.name == '其它' || item.name == '换尿布' || item.name == '洗澡') {
+			if (item.name == '其它' || item.name == '换尿布' || item.name == '洗澡' || item.name == '臭臭') {
 				str += item.text2;
 			}
 			str += ">>>>>>";
@@ -587,6 +617,13 @@ Page({
 				qitaRecord: record
 			});
 		}
+		if (name == '臭臭') {
+			record = this.data.chouchouRecord;
+			record.text2 = e.detail;
+			this.setData({
+				chouchouRecord: record
+			});
+		}
 
 	},
 	text3Input(e) {
@@ -661,28 +698,40 @@ Page({
 			qitaShow: false,
 			baobaoShow: false,
 			shengaoShow: false,
-			tizhongShow: false
+			tizhongShow: false,
+			chouchouShow: false
 		});
 	},
 	deleteRecord: function(ev) {
 		let id = ev.currentTarget.dataset.id;
-		console.info(id);
-		let that = this;
-		wx.showModal({
-			title: '',
-			content: '删除后无法恢复，是否继续？',
-			success(res) {
-				if (res.confirm) {
+		let user_id = ev.currentTarget.dataset.item.user_id;
+		if (this.data.userInfo._id != user_id) {
+			Dialog.alert({
+				message: '只能删除本人添加的记录！',
+			}).then(() => {
+				// on close
 
-					db_util.deleteRecord(id, function() {
-						that.getTodayRecords();
+			});
+		} else {
+			console.info(id);
+			let that = this;
+			wx.showModal({
+				title: '',
+				content: '删除后无法恢复，是否继续？',
+				success(res) {
+					if (res.confirm) {
 
-					});
-				} else if (res.cancel) {
+						db_util.deleteRecord(id, function() {
+							that.getTodayRecords();
 
+						});
+					} else if (res.cancel) {
+
+					}
 				}
-			}
-		})
+			})
+		}
+
 
 	},
 	babyInfoSubmit: function() {
@@ -791,6 +840,13 @@ Page({
 				qitaRecord: record
 			});
 		}
+		if (name == '臭臭') {
+			let record = this.data.chouchouRecord;
+			record.text1 = selectTime;
+			this.setData({
+				chouchouRecord: record
+			});
+		}
 		if (name == '生日') {
 			let child = this.data.babyInfo;
 			child.brithday = db_util.formatTime(new Date(selectTime.replace(/-/g, '/')), 'Y-M-D');
@@ -818,9 +874,9 @@ Page({
 		});
 	},
 	onShareAppMessage: function() {
-	
-		let path='/pages/index/index?id='+this.data.babyInfo._id; // 路径，传递参数到指定页面。
-		let desc=this.data.userInfo.nick_name + '邀您一起记录' + this.data.babyInfo.name + '的成长';
+
+		let path = '/pages/index/index?id=' + this.data.babyInfo._id; // 路径，传递参数到指定页面。
+		let desc = this.data.userInfo.nick_name + '邀您一起记录' + this.data.babyInfo.name + '的成长';
 		console.info(path);
 		return {
 			title: '宝宝速记',
@@ -838,11 +894,11 @@ Page({
 			return
 		}
 		let child_id = e.id;
-	
+
 		//let child_id="6d127e375f30acd300034dca32212ff5";
 		if (child_id) {
 			wx.setStorageSync('share_child_id', child_id);
-			console.log('获取分享参数child_id;'+child_id);
+			console.log('获取分享参数child_id;' + child_id);
 		}
 		let typeList = [{
 			"_id": "6d127e375f292a48000024803d3ddaf5",
@@ -882,6 +938,10 @@ Page({
 			"name": "体重"
 		}, {
 			"_id": "c8a291cf5f292e20000034df1485a535",
+			"icon": "/images/bb.png",
+			"name": "臭臭"
+		}, {
+			"_id": "c8a291cf5f292e20000034df1485a535",
 			"icon": "other-pay",
 			"name": "其它"
 		}];
@@ -894,13 +954,13 @@ Page({
 			wx.showLoading({
 				title: '加载中',
 			})
-			db_util.getUserById(user._id, function(users) {			
+			db_util.getUserById(user._id, function(users) {
 				let user = users[0];
 				that.setData({
 					userInfo: user,
 					isLogin: true
 				})
-				that.bindBaby(user,child_id);
+				that.bindBaby(user, child_id);
 
 				wx.hideLoading();
 			});
@@ -922,53 +982,53 @@ Page({
 
 	},
 
-	bindBaby(userInfo,share_child_id){
-		let me=this;
-	//查询用户的宝宝ID
-	console.info("share_id:"+share_child_id);
-		if(share_child_id){	
-		db_util.getChildIdByUserId(userInfo._id, function(_id) {
-		db_util.getChild(share_child_id, function(childs) {		
-			if(share_child_id!=_id){
-							//弹出提示是否要绑定新的宝宝
-							Dialog.confirm({
-								title: '新宝宝提示',
-								message: '是否要绑定【'+childs[0].name+"】为您的宝宝？\n绑定后，以前的宝宝数据会被清空~",
-							}).then(() => {
-									// on confirm
-									//更新宝宝为最新的宝宝
-									wx.showLoading({
-										title: '更新中...',
+	bindBaby(userInfo, share_child_id) {
+		let me = this;
+		//查询用户的宝宝ID
+		console.info("share_id:" + share_child_id);
+		if (share_child_id) {
+			db_util.getChildIdByUserId(userInfo._id, function(_id) {
+				db_util.getChild(share_child_id, function(childs) {
+					if (share_child_id != _id) {
+						//弹出提示是否要绑定新的宝宝
+						Dialog.confirm({
+							title: '新宝宝提示',
+							message: '是否要绑定【' + childs[0].name + "】为您的宝宝？\n绑定后，以前的宝宝数据会被清空~",
+						}).then(() => {
+							// on confirm
+							//更新宝宝为最新的宝宝
+							wx.showLoading({
+								title: '更新中...',
+							})
+							db_util.getUserChildByUserId(userInfo._id, function(res) {
+
+								db_util.updateUserChild(res._id, share_child_id, function(res) {
+									wx.setStorageSync('child_id', share_child_id);
+									wx.hideLoading({
+										success: (res) => {},
 									})
-									db_util.getUserChildByUserId(userInfo._id ,function (res){
-
-										db_util.updateUserChild(res._id,share_child_id ,function (res){
-											wx.setStorageSync('child_id',share_child_id);
-											wx.hideLoading({
-												success: (res) => {},
-											})
-											me.getTodayRecords();
-
-										});
-									});										
-								}).catch(() => {
-									// on cancel
 									me.getTodayRecords();
 
-								})
-			}else{
+								});
+							});
+						}).catch(() => {
+							// on cancel
+							me.getTodayRecords();
 
-			}
-			
-		
-		});
-	
-	
-	});
-}else{
-	me.getTodayRecords();
+						})
+					} else {
 
-}
+					}
+
+
+				});
+
+
+			});
+		} else {
+			me.getTodayRecords();
+
+		}
 	},
 	getTypeByName(name) {
 		let typeList = this.data.typeList;
@@ -1036,7 +1096,7 @@ Page({
 							isLogin: true
 						});
 						let share_child_id = wx.getStorageSync('share_child_id');
-							me.bindBaby(users[0],share_child_id);				
+						me.bindBaby(users[0], share_child_id);
 
 					} else {
 						//新用户，插入数据库，创建宝宝对象
