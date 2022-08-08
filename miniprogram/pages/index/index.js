@@ -409,12 +409,10 @@ Page({
 		if (!this.data.isLogin) {
 			return;
 		}
-		let user = wx.getStorageSync("userInfo");
-		let child_id = wx.getStorageSync('child_id');
+		let user = wx.getStorageSync("userInfo");		
 		wx.showLoading({
 			title: '加载中',
-		})
-		if (child_id == '' || child_id == 'null' || child_id == null) {
+		})		
 			db_util.getChildIdByUserId(user._id, function(_id) {
 				wx.setStorageSync('child_id', _id);
 				db_util.getChild(_id, function(childs) {
@@ -441,29 +439,10 @@ Page({
 
 				});
 			});
-		} else {
-			db_util.getRecordsToday(user._id, child_id, function(records) {
-				for (let i in records) {
-
-					records[i].showTime = db_util.formatTime(new Date(records[i].seach_time), 'h:m');
-				}
-				me.setData({
-					recordList: records
-				});
-				me.getNoticeList(records);
-
-				wx.hideLoading();
-
-			});
-			db_util.getChild(child_id, function(childs) {
-				let child = childs[0];
-				child.age = db_util.getAge(child.brithday);
-				wx.setStorageSync('child', child);
-				me.setData({
-					babyInfo: child
-				});
-			});
-		}
+		
+		wx.removeStorage({
+			key: 'share_child_id'
+		})
 	},
 	getNoticeList(recordList) {
 		let notices = [];
@@ -839,10 +818,14 @@ Page({
 		});
 	},
 	onShareAppMessage: function() {
+	
+		let path='/pages/index/index?id='+this.data.babyInfo._id; // 路径，传递参数到指定页面。
+		let desc=this.data.userInfo.nick_name + '邀您一起记录' + this.data.babyInfo.name + '的成长';
+		console.info(path);
 		return {
 			title: '宝宝速记',
-			desc: this.data.userInfo.nick_name + '邀您一起记录' + this.data.babyInfo.name + '的成长',
-			path: '/pages/index/index?child_id='+this.data.babyInfo._id // 路径，传递参数到指定页面。
+			desc: desc,
+			path: path
 		}
 	},
 	dayListCancel() {
@@ -854,10 +837,12 @@ Page({
 		if (!wx.cloud) {
 			return
 		}
-		let child_id = e.child_id;
+		let child_id = e.id;
+	
 		//let child_id="6d127e375f30acd300034dca32212ff5";
 		if (child_id) {
 			wx.setStorageSync('share_child_id', child_id);
+			console.log('获取分享参数child_id;'+child_id);
 		}
 		let typeList = [{
 			"_id": "6d127e375f292a48000024803d3ddaf5",
@@ -909,25 +894,13 @@ Page({
 			wx.showLoading({
 				title: '加载中',
 			})
-			db_util.getUserById(user._id, function(users) {
-				if (users.length <= 0) {
-					wx.clearStorageSync();
-					wx.hideLoading({
-						complete: (res) => {},
-					})
-					let userInfo = {};
-					userInfo.avatar_url = "../../images/unlogin.png";
-					this.setData({
-						userInfo: userInfo,
-						isLogin: false
-					});
-				}
+			db_util.getUserById(user._id, function(users) {			
 				let user = users[0];
 				that.setData({
 					userInfo: user,
 					isLogin: true
 				})
-				that.getTodayRecords();
+				that.bindBaby(user,child_id);
 
 				wx.hideLoading();
 			});
@@ -947,6 +920,55 @@ Page({
 		}
 		//获取今日数据
 
+	},
+
+	bindBaby(userInfo,share_child_id){
+		let me=this;
+	//查询用户的宝宝ID
+	console.info("share_id:"+share_child_id);
+		if(share_child_id){	
+		db_util.getChildIdByUserId(userInfo._id, function(_id) {
+		db_util.getChild(share_child_id, function(childs) {		
+			if(share_child_id!=_id){
+							//弹出提示是否要绑定新的宝宝
+							Dialog.confirm({
+								title: '新宝宝提示',
+								message: '是否要绑定【'+childs[0].name+"】为您的宝宝？\n绑定后，以前的宝宝数据会被清空~",
+							}).then(() => {
+									// on confirm
+									//更新宝宝为最新的宝宝
+									wx.showLoading({
+										title: '更新中...',
+									})
+									db_util.getUserChildByUserId(userInfo._id ,function (res){
+
+										db_util.updateUserChild(res._id,share_child_id ,function (res){
+											wx.setStorageSync('child_id',share_child_id);
+											wx.hideLoading({
+												success: (res) => {},
+											})
+											me.getTodayRecords();
+
+										});
+									});										
+								}).catch(() => {
+									// on cancel
+									me.getTodayRecords();
+
+								})
+			}else{
+
+			}
+			
+		
+		});
+	
+	
+	});
+}else{
+	me.getTodayRecords();
+
+}
 	},
 	getTypeByName(name) {
 		let typeList = this.data.typeList;
@@ -1014,47 +1036,7 @@ Page({
 							isLogin: true
 						});
 						let share_child_id = wx.getStorageSync('share_child_id');
-						//查询用户的宝宝ID
-						db_util.getChildIdByUserId(userInfo._id, function(_id) {
-							db_util.getChild(share_child_id, function(childs) {
-							
-								if(share_child_id&&share_child_id!=_id){
-												//弹出提示是否要绑定新的宝宝
-												Dialog.confirm({
-													title: '新宝宝提示',
-													message: '是否要绑定【'+childs[0].name+"】为您的宝宝？\n绑定后，以前的宝宝数据会被清空~",
-												}).then(() => {
-														// on confirm
-														//更新宝宝为最新的宝宝
-														wx.showLoading({
-															title: '更新中...',
-														})
-														db_util.getUserChildByUserId(userInfo._id ,function (res){
-
-															db_util.updateUserChild(res._id,share_child_id ,function (res){
-																wx.hideLoading({
-																	success: (res) => {},
-																})
-																me.getTodayRecords();
-
-															});
-														});										
-													}).catch(() => {
-														// on cancel
-														me.getTodayRecords();
-
-													})
-								}else{
-									me.getTodayRecords();
-
-								}
-								
-							
-							});
-						
-						
-						});
-				
+							me.bindBaby(users[0],share_child_id);				
 
 					} else {
 						//新用户，插入数据库，创建宝宝对象
