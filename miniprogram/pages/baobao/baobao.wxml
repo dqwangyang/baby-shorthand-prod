@@ -1,4 +1,4 @@
-<van-tabs active="{{active}}"  sticky active="{{ active }}" bind:change="onTabsChange">
+<van-tabs color="#FF9DCA" active="{{active}}"  sticky active="{{ active }}" bind:change="onTabsChange">
   <van-tab name="a" title="日记广场">
     <view style=" overflow-x: hidden;">
 <view   animation='{{animationData}}'    wx:if="{{pageList.length>0}}" class="content">

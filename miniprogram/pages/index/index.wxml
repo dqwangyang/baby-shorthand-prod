@@ -28,6 +28,7 @@
               <button bindtap="updateUserInfo" size="mini" class="submit-btn" > 修改 </button>
             </view>
           </view>
+        
           <view class="top-box-right" style="margin-top:30rpx;">
               <van-cell  bind:click ="gotoMyinfo" custom-class="van-cell-custom" border="{{false}}"  title="{{babyInfo.name}}" is-link />
               <van-cell   custom-class="van-cell-custom" border="{{false}}" title="{{babyInfo.brithday}}"  />
@@ -42,7 +43,9 @@
     </view>
   </view>
   <view class="split-line"></view>
-
+  <view style="width:90%;">
+            <ad unit-id="adunit-48c80bbf26e5b563"></ad>
+     </view>
 <view style="width:90%;">
 <van-sticky>
 <van-grid  border="{{false}}"  column-num="6">

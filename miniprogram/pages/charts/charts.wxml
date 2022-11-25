@@ -6,6 +6,8 @@
 </van-cell>
 </van-sticky>
 <view style="width:90%; margin: 5%;">
+  <ad unit-id="adunit-48c80bbf26e5b563"></ad>
+
 <van-sticky>
 
 <van-grid column-num="6" clickable="true">

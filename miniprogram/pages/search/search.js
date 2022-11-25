@@ -66,6 +66,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    
     var selectTime=this.data.defaultDate;
     let childId=wx.getStorageSync('child_id');
     let me=this;
