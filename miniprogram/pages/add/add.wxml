@@ -1,0 +1,37 @@
+<view style="margin: 5%;">
+<view>
+    <van-cell-group>
+  <van-field custom-style="height:300px;"
+  model:value="{{ title }}"
+    placeholder="请输入内容"    
+    required
+    type="textarea"
+    border="{{ false }}"
+    bind:change="onChange"
+  />  
+</van-cell-group>
+</view>
+<view style="margin-top: 20px;;">
+<!-- <van-cell-group>
+  <van-field custom-style="height:300px;"
+  model:value ="{{ context }}"
+    placeholder="请输入内容"
+    required
+    type="textarea"
+    border="{{ false }}"
+    autosize=" {  minHeight: 500 }"
+    bind:change="onChange"
+  />  
+</van-cell-group> -->
+</view>
+<view style="margin-top: 20px;">
+    <van-divider contentPosition="center">请上传照片，最多3张，请勿上传违规图片</van-divider>
+
+    <van-uploader  catch:delete="deleteImg" file-list="{{ fileList }}" bind:after-read="afterRead" />
+
+</view>
+<view>
+    <van-button size="small" bind:click="add"   type="primary" color="#FF9DCA" block>发布</van-button>
+</view>
+</view>
+

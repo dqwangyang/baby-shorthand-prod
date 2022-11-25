@@ -195,6 +195,48 @@ function getUserChildByUserId(userId,onSuccess){
     }
   })
 }
+//根据用户ID获取用户和宝宝的关联关系记录
+ async function getImages(pageSize,pageIndex,userId,onSuccess){
+   let p = null;
+   if(userId != ''){
+   p = await  db.collection('mm_babay_images').where({
+     user_id:userId
+   }).orderBy("create_time","desc").limit(pageSize).skip(pageIndex*pageSize).get()
+   }else{
+    p = await  db.collection('mm_babay_images').orderBy("create_time","desc").limit(pageSize).skip(pageIndex*pageSize).get()
+   }
+   const list = p.data
+   for(let i in list){
+    const ss = await db.collection('mm_images').where({
+        image_id:list[i]._id,
+    }).get()
+    let images = ss.data
+    let auditImages=[]
+    for(let i in images){
+        let traceId=images[i].traceId
+        const audit = await db.collection('mm_image_audit').where({
+            traceId:traceId
+        }).count()
+        if(audit.total>0){
+          auditImages.push(images[i])
+        }
+    }
+            list[i].images=auditImages             
+            list[i].likeCount=list[i].likes
+            }
+        onSuccess(list);
+      }    
+  
+      function updateLike(babayImageId){        
+            db.collection('mm_babay_images').doc(babayImageId).update({
+                data:{
+                 likes:db.command.inc(1),//自增
+                },
+                success: function(res) {
+                    onSuccess(res);            
+                  }
+            })
+      }
 //更新用户的宝宝
 function updateUserChild(id,childId,onSuccess){
   db.collection('mm_user_childs').doc(id).update({
@@ -384,6 +426,8 @@ module.exports = {
   getRecordsByTypeName:getRecordsByTypeName,
   deleteRecord:deleteRecord,
   updateUserChild:updateUserChild,
-  getUserChildByUserId:getUserChildByUserId
+  getUserChildByUserId:getUserChildByUserId,
+  getImages:getImages,
+  updateLike:updateLike
 }
 

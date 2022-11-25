@@ -1,0 +1,13 @@
+{
+    "usingComponents": {
+      "van-tab": "@vant/weapp/tab/index",
+      "van-tabs": "@vant/weapp/tabs/index",
+      "van-transition": "@vant/weapp/transition/index"
+
+
+    },
+    "navigationBarTitleText": "宝宝日记",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#FA8072"
+}

@@ -1,0 +1,10 @@
+{
+    "usingComponents": {  
+        "van-uploader": "@vant/weapp/uploader/index",
+        "van-divider": "@vant/weapp/divider/index"
+
+    },
+    "navigationBarTitleText": "添加日记",
+    "navigationBarTextStyle": "white"
+
+}

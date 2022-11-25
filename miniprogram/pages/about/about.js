@@ -26,7 +26,7 @@ Page({
   bugSubmit:function(e){
     let user=wx.getStorageSync('userInfo');
     if(user!=null&&user._id!=null&&user._id!=""){
-      let bugs={};
+      let bugs={}; 
       bugs.text=this.data.message;
       bugs.user_id=user._id;
       if(bugs.text==''){

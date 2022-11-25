@@ -1,0 +1,93 @@
+<van-tabs active="{{active}}"  sticky active="{{ active }}" bind:change="onTabsChange">
+  <van-tab name="a" title="日记广场">
+    <view style=" overflow-x: hidden;">
+<view   animation='{{animationData}}'    wx:if="{{pageList.length>0}}" class="content">
+  <view class="left">
+    <block wx:for="{{pageList}}" wx:key="index">
+      <template is="item" data="{{item:item,index:index}}" wx:if="{{index%2==0}}"></template>
+    </block>
+  </view>
+  <view class="right" style="margin-left: 10rpx;">
+    <block wx:for="{{pageList}}" wx:key="index">
+      <template is="item" data="{{item:item,index:index}}" wx:if="{{index%2==1}}"></template>
+    </block>
+  </view>
+</view>
+<view wx:if="{{pageList.length<=0}}">
+    <van-empty description="暂无宝宝日记哦～">
+       <van-button size="small"bind:click="toAdd"   type="primary" color="#FF9DCA" block>去添加</van-button>
+     </van-empty>
+</view>
+<template name="item" >
+  <view    class="item">
+  <image   bindtap='previewImage' mode = "aspectFill"  src="{{item.url}}" bindtap='previewImage' data-item="{{item.images}}" > </image>
+    <view class="item-title-box">
+      <navigator url="url" class="item-title">{{item.title}}</navigator>
+    </view>
+    <view class="item-title-box">
+      <text class="item-title" style="color: #c4c4c4;">{{item.createTime}}</text>
+    </view>
+        <view class="name">
+      <image class="item-ava" src="{{item.avatar}}"></image>
+      <text class="name-title">{{item.name}}</text>
+      <view   class="heart">     
+      <view capture-catch:tap="heartClick" data-userId="{{item.userId}}" data-id="{{item.id}}">
+        <van-icon  name="good-job"  />     
+        <text style="margin-left: 10rpx;">{{item.likeCount}}</text>
+      </view>
+        <van-button custom-style="border: none;" open-type="share" size="mini" icon="share"></van-button>  
+          </view>     
+    </view>
+  </view>
+</template>
+</view>
+  </van-tab>
+  <van-tab name="b" title="我的日记">
+    <view style=" overflow-x: hidden;">
+<view  wx:if="{{myPageList.length>0}}" class="content">
+  <view class="left">
+    <block wx:for="{{myPageList}}" wx:key="index">
+      <template is="myItem" data="{{item:item,index:index}}" wx:if="{{index%2==0}}"></template>
+    </block>
+  </view>
+  <view class="right" style="margin-left: 10rpx;">
+    <block wx:for="{{myPageList}}" wx:key="index">
+      <template is="myItem" data="{{item:item,index:index}}" wx:if="{{index%2==1}}"></template>
+    </block>
+  </view>
+</view>
+<view wx:if="{{myPageList.length<=0}}">
+    <van-empty description="暂无宝宝日记哦～">
+       <van-button size="small"bind:click="toAdd"   type="primary" color="#FF9DCA" block>去添加</van-button>
+     </van-empty>
+</view>
+<template name="myItem">
+  <view class="item">
+    <image  bindtap='previewImage' mode = "aspectFill"  src="{{item.url}}" bindtap='previewImage' data-item="{{item.images}}" > </image>
+    <view class="item-title-box">
+      <navigator url="url" class="item-title">{{item.title}}</navigator>
+    </view>
+    <view class="item-title-box">
+      <text class="item-title" style="color: #c4c4c4;">{{item.createTime}}</text>
+    </view>
+        <view class="name">
+      <image class="item-ava" src="{{item.avatar}}"></image>
+      <text class="name-title">{{item.name}}</text>
+      <view class="heart" capture-catch:tap="heartClick" data-userId="{{item.userId}}" data-id="{{item.id}}">
+     
+        <van-icon name="good-job" />     
+
+        <text style="margin-left: 10rpx;">{{item.likeCount}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+</view>
+  </van-tab>
+</van-tabs>
+
+
+<view  class="footer">
+    <van-button  size="small" bind:click="toAdd"   type="primary" color="#FF9DCA" block>发日记</van-button>
+</view>
+

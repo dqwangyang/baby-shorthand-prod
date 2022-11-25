@@ -25,6 +25,12 @@
 
 <view style="width:90%;margin-left:5%;margin-right:5%;margin-bottom: 30%;">
      <van-collapse value="{{ activeNames }}" bind:change="onChange">
+      <van-collapse-item title="2022年11月24日" name="3">
+        <view>1.增加日记广场</view>
+      <view>2.上传图片后需要稍等片刻才能显示，因为要审核，如果长时间没有显示，说明没通过审核，请检查图片是否合规</view>   
+      <view>3.请勿上传违法图片</view>    
+ 
+      </van-collapse-item> 
       <van-collapse-item title="2022年8月8日" name="2">
       <text>增加臭臭记录</text>
     </van-collapse-item> 

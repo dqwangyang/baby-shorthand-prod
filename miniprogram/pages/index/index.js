@@ -516,14 +516,19 @@ Page({
 				url: '/pages/search/search',
 			})
 		}
-		if (event.detail == 3) {
+		if (event.detail == 4) {
 			wx.redirectTo({
 				url: '/pages/about/about',
+			})
+        }
+        if (event.detail == 3) {
+			wx.redirectTo({
+				url: '/pages/charts/charts',
 			})
 		}
 		if (event.detail == 2) {
 			wx.redirectTo({
-				url: '/pages/charts/charts',
+				url: '/pages/baobao/baobao',
 			})
 		}
 	},

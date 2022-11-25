@@ -1,0 +1,107 @@
+page {
+    width: 100%;
+
+  }
+  
+  .content {
+    text-align: justify;
+    padding-bottom: 50px;
+  }
+  
+  .item {
+    background-color: #fff;
+    margin: 10rpx 3%;
+    margin-bottom: 20rpx;
+    display: inline-block;
+    width: 96%;
+    border-radius: 20rpx;
+    overflow: hidden;
+    
+  }
+  
+  .item-ava {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 20rpx;
+  }
+  
+  .heart {    
+    margin-right: 0rpx;
+  }
+  
+  .heart {
+    display: flex;
+    align-items: center;
+  }
+  
+  .item-img {
+    width: 100%
+  }
+  
+  .item-title {
+    font-size: 24rpx;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    font-family: 'PingFang SC-Medium';
+    color: #1e1e1e;
+    margin: 15rpx;
+    line-height: 30rpx;
+  }
+  
+  .item .name {
+    display: flex;
+    padding: 0 15rpx;
+    margin-top: 20rpx;
+    padding-bottom: 10rpx;
+    align-items: center;
+    font-size: 22rpx;
+    color: #1e1e1e;
+    font-family: 'PingFang SC-Medium';
+  }
+  
+  .name image {
+    flex: 0 0 auto;
+  }
+  
+  .item-title-box {
+    display: flex;
+    position: relative;
+  }
+  
+  .name-title {
+    flex: 1;
+    margin-left: 18rpx;
+    margin-right: 20rpx;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+  }
+  
+  .name text:last-child {
+    color: #c4c4c4;
+    line-height: 10rpx;
+  
+  }
+  
+  .left,
+  .right {
+    display: inline-block;
+    vertical-align: top;
+    width: 48%;
+  }
+  .add_btn{
+    color: white;
+    background: #FF9DCA;
+    border-color: #FF9DCA;
+  }
+  .footer{
+     width: 90%;  
+    position: fixed;   
+    bottom: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+  }

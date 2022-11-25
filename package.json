@@ -2,6 +2,8 @@
   "requires": true,
   "lockfileVersion": 1,
   "dependencies": {
+    "wx-server-sdk":"latest",
+    "axios":"latest",
     "@cloudbase/database": {
       "integrity": "sha1-rARL3MPAV7/Uec/KEYQPCfHNvmo=",
       "requires": {

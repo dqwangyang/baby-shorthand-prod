@@ -25,7 +25,7 @@
               {{userInfo.nick_name}}
             </view>
             <view wx:if="{{isLogin}}" class="my-nickname" style="margin-top: 10rpx;">
-              <button bindtap="updateUserInfo" class="submit-btn" > 修改 </button>
+              <button bindtap="updateUserInfo" size="mini" class="submit-btn" > 修改 </button>
             </view>
           </view>
           <view class="top-box-right" style="margin-top:30rpx;">
@@ -556,6 +556,7 @@
 <van-tabbar active="{{ 0 }}" bind:change="onTabbarChange">
   <van-tabbar-item icon="home-o">服务</van-tabbar-item>
   <van-tabbar-item icon="search">记录</van-tabbar-item> 
+  <van-tabbar-item icon="/images/icon_record_3.png">广场</van-tabbar-item> 
   <van-tabbar-item icon="chart-trending-o">图表</van-tabbar-item> 
   <van-tabbar-item icon="service">关于</van-tabbar-item> 
 
