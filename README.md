@@ -1,12 +1,30 @@
-# 云开发 quickstart
+# 宝宝速记
 
-这是云开发的快速启动指引，其中演示了如何上手使用云开发的三大基础能力：
+#### 介绍
+婴儿日常行为记录，比如喂奶，辅食，便便，睡觉等
 
-- 数据库：一个既可在小程序前端操作，也能在云函数中读写的 JSON 文档型数据库
-- 文件存储：在小程序前端直接上传/下载云端文件，在云开发控制台可视化管理
-- 云函数：在云端运行的代码，微信私有协议天然鉴权，开发者只需编写业务逻辑代码
+#### 软件架构
 
-## 参考文档
+1. 本项目采用小程序的云开发，代码只是给出了业务代码，导入IDE后并不能直接运行
+1. 采用vant weapp 地址:https://youzan.github.io/vant-weapp/#/intro
 
-- [云开发文档](https://developers.weixin.qq.com/miniprogram/dev/wxcloud/basis/getting-started.html)
 
+
+#### 安装教程
+
+1.  下载代码
+2.  自己先创建个云开发项目
+3.  把相关的代码页面拷贝到刚才自己创建的小程序项目下
+
+#### 使用说明
+截图如下：
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0817/104509_5860192c_933825.jpeg "b1.jpg")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0817/113209_fe1d34b9_933825.jpeg "n.jpg")
+
+
+
+扫码体验
+![扫码体验](https://images.gitee.com/uploads/images/2020/0817/104541_42aecf45_933825.png "微信图片_20200810181631.png")
+
+
+ 代码写的比较辣鸡 :joy: 大佬们凑合着看吧，！
